@@ -1,3 +1,9 @@
 # Fase 2. Een onderzoeksvraag formuleren
 
-Noteer in dit document je ideeën voor een onderwerp en onderzoeksvraag. Je hoeft je nog niet te beperken tot één onderwerp! Schrijf verschillende ideeën uit, later kan je een definitieve keuze maken.
+- Hoe kan machine learning ingezet worden om de throughput van liften te verhogen?
+  - PoC
+  - Hoe troughput definieren?
+- SDK generen van microservice API's voor gebruik in een custom gateway.
+  - SDK Alternatieven?
+- Overgang van bestaande polyrepo structuur naar een monorepo.
+  - Hoe uitvoeren in een continue werkomgeving?
