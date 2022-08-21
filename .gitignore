@@ -129,3 +129,7 @@ sympy-plots-for-*.tex/
 
 # Vim-LaTeX
 *.latexmain
+
+# Vimtex
+*.bak
+*.sav.tmp
