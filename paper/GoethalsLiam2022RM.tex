@@ -1,90 +1,23 @@
-%==============================================================================
-% Sjabloon onderzoeksvoorstel bachelorproef
-%==============================================================================%
-% Compileren in TeXstudio:
-%
-% - Zorg dat Biber de bibliografie compileert (en niet Biblatex)
-%   Options > Configure > Build > Default Bibliography Tool: "txs:///biber"
-% - F5 om te compileren en het resultaat te bekijken.
-% - Als de bibliografie niet zichtbaar is, probeer dan F5 - F8 - F5
-%   Met F8 compileer je de bibliografie apart.
-%
-% Als je JabRef gebruikt voor het bijhouden van de bibliografie, zorg dan
-% dat je in ``biblatex''-modus opslaat: File > Switch to BibLaTeX mode.
-
 \documentclass{hogent-article}
-
-%------------------------------------------------------------------------------
-% Metadata over het artikel
-%------------------------------------------------------------------------------
-
-%---------- Titel & auteur ----------------------------------------------------
-
-% TODO: (fase 2) geef werktitel van je eigen voorstel op
 \PaperTitle{De overgang van een poly-repository microservice structuur naar een mono-repository in een continue werkomgeving}
-% Dit is typisch de opdracht en het vak waarvoor dit artikel geschreven is, bv.
-% ``Verslag onderzoeksproject Onderzoekstechnieken 2018-2019''
 \PaperType{Paper Research Methods: onderzoeksvoorstel}
-
-% TODO: (fase 1) vul je eigen naam in als auteur, geef ook je emailadres mee!
 \Authors{Liam Goethals\textsuperscript{1}} % Authors
-
-% Als het hier effectief gaat om een voorstel voor de bachelorproef, dan ben je
-% hier verplicht de naam van je co-promotor in te vullen. Zoniet, dan kan je het
-% leeg laten.
 \CoPromotor{}
-
-% Contactinfo: Geef hier de contactgegevens van elke auteur van het artikel (en
-% indien van toepassing ook van de co-promotor).
 \affiliation{
   \textsuperscript{1} \href{mailto:liam.goethals@student.hogent.be}{liam.goethals@student.hogent.be}}
-
-%---------- Abstract ----------------------------------------------------------
-
-\Abstract{% TODO: (fase 6)
+\Abstract{
 Bij de implementatie van microservices wordt vaak teruggegrepen naar een poly-repository architectuur.
 De alternatieve mono-repository architectuur is, afhankelijk van situatie, echter een even geschikte kandidaat.
 Dit onderzoek bekijkt de bestaande implementatie mogelijkheden van mono-repositories en cre"eert een abstract stappenplan voor het migreren van poly-repositories naar mono-repositories. Dit stappenplan wordt onderbouwd aan de hand van praktijkkennis. Deze kennis wordt vergaard door middel van de uitwerking van een Proof-of-Concept. Uiteindelijk wordt er verwacht dat de migratie uitvoerbaar is zonder de nood aan een team van experten en dat een abstract stappenplan kan opgesteld worden aan de hand van de bekomen kennis.
 }
-
-%---------- Onderzoeksdomein en sleutelwoorden --------------------------------
-% TODO: (fase 2) Vul de sleutelwoorden aan.
-
-% Het eerste sleutelwoord beschrijft het onderzoeksdomein. Je kan kiezen uit
-% deze lijst:
-%
-% - Mobiele applicatieontwikkeling
-% - Webapplicatieontwikkeling
-% - Applicatieontwikkeling (andere)
-% - Systeembeheer
-% - Netwerkbeheer
-% - Mainframe
-% - E-business
-% - Databanken en big data
-% - Machineleertechnieken en kunstmatige intelligentie
-% - Andere (specifieer)
-%
-% De andere sleutelwoorden zijn vrij te kiezen.
-
 \Keywords{Applicatieontwikkeling (andere); Mono-repository; Strategie; Versiebeheer}
-\newcommand{\keywordname}{Sleutelwoorden} % Defines the keywords heading name
-
-%---------- Titel, inhoud -----------------------------------------------------
-
+\newcommand{\keywordname}{Sleutelwoorden}
 \begin{document}
-
-\flushbottom % Makes all text pages the same height
-\maketitle % Print the title and abstract box
-\tableofcontents % Print the contents section
-\thispagestyle{empty} % Removes page numbering from the first page
-
-%------------------------------------------------------------------------------
-% Hoofdtekst
-%------------------------------------------------------------------------------
-
+\flushbottom
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
 \section{Inleiding}
-
-% TODO: (fase 2) introduceer je gekozen onderwerp, formuleer de onderzoeksvraag en deelvragen. Wat is de doelstelling (is die S.M.A.R.T.?), wat zal het resultaat zijn van het onderzoek (een Proof-of-Concept, een prototype, een advies, ...)? Waarom is het nuttig om dit onderwerp te onderzoeken?
 In het landschap van microservices wordt vaak gebruik gemaakt van poly-repository architecturen. Vele bronnen en stappenplannen op het internet bespreken hoe dit soort architectuur opgezet en onderhouden moet worden. Het opsplitsen van services en het onderscheiden van applicaties in verschillende repositories zijn echter twee aparte zaken.
 
 Dit onderzoek beschrijft een bestaand alternatief voor de populaire implementatie, namelijk: mono-repositories. Daarnaast wordt onderzocht hoe de overschakeling van poly-repositories naar mono-repositories kan plaatsvinden, zonder de continue voortgang van het bestaande project te verbreken. 
@@ -93,20 +26,16 @@ Dit onderzoek zal zich niet richten op de waarom-vraag van het overschakelen aan
 Aan de hand van een bedrijfscasus wordt de migratie van een bestaande poly-repository architectuur naar een mono-repository architectuur uitgevoerd. Tot slot wordt een abstract stappenplan opgesteld dat ontwikkelaars moet helpen bij de architecturale overschakeling in hun specifieke bedrijfscontext.
 
 \section{Overzicht literatuur}
-% Wat zijn microservices?
 Het doel van microservices is het opsplitsen van een complexe applicatie in een aantal sub-applicaties met elk een specifieke verantwoordelijkheid \autocite{Thoenes2015}. Anders dan bij een monoliete applicatie, is elke service een alleenstaande entiteit die op zichzelf kan bestaan. Deze aparte entiteiten kunnen elk een eigen team van developers hebben waardoor een gelijktijdige samenwerking van meerdere teams aan hetzelfde hoofddoel mogelijk is. Elk team is dan verantwoordelijk voor de correcte werking, testing en deployment van hun service.
 Hoewel microservices niet enkel beperkt zijn tot web toepassingen, is de architectuur grotendeels terug te vinden in de wereld van webapplicaties \autocite{Richardson2019}.
 
-% implementatie vorm: polyrepos
 De concrete implementatie van microservices is sterk afhankelijk van de bedrijfscontext. In de praktijk worden de verschillende services vaak opgesplitst in afzonderlijke repositories (polyrepos) \autocite{Brousse2019}. Elke repository bevat vervolgens normaliter applicatiespecifieke configuraties zoals: testen, een eigen mappenstructuur, CI/CD pipelines, toegangsrechten en afhankelijk van de benodigdheden en gebruikte systemen nog veel meer andere zaken. Deze implementatie vorm heeft als gevolgd dat er duplicate code en inconsistenties kunnen voorkomen doorheen de verschillende applicaties. Wanneer twee of meerdere applicaties een onderlinge afhankelijk hebben, zullen aanpassingen in de \'e\'ene applicatie mogelijks onverwachte effecten hebben in de andere(n). Dit laatste fenomeen maakt versiebeheer een belangrijk concept binnen opgesplitste services \autocite{Richardson2019}.
 
-% implementatie vorm: monorepos
 Een aantal grote bedrijven waaronder Google \autocite{Potvin&Levenberg2016}, Microsoft \autocite{Tirion2021} en Facebook \autocite{Goode2014} besloten echter voor een andere implementatie vorm dan polyrepos, namelijk: de mono-repository (monorepo) architectuur.
 In een monorepo worden services alsnog opgesplitst, maar in plaats van te onderverdelen in verschillende repositories worden ze onderverdeeld in submappen binnen eenzelfde repository.
 Alle afzonderlijke services kunnen nog steeds direct aangesproken worden en kunnen dus beschouwd worden als alleenstaande applicaties.
 Dit laatste onderscheidt monorepos van monoliete applicaties \autocite{Brito2018}.
 
-% polyrepos vs monorepos
 Voor de gepaste implementatie keuze bestaan er voor beide vormen onderbouwde argumenten. Zolang de microservice methodologi"en gerespecteerd worden kunnen echter met beide een correct resultaat behaald worden. Elke implementatie vorm heeft zijn eigen voor- en nadelen op vlak van ontwikkelingsproces maar de keuze blijft afhangen van preferentie en context. Volgens een artikel van (ex-)medewerkers \textcite{Potvin&Levenberg2016} heeft Google zijn keuze grotendeels gebaseerd op de versimpelde werking van onderlinge service afhankelijkheid. In het verleden is er echter al een aantal keer intern onderzocht of het gunstig kon zijn om af te stappen van monorepos.  
 
 Zowel bij polyrepos als bij monorepos draagt elke service zijn eigen verantwoordelijkheid. Een publiek aansprekingspunt geeft de andere services toegang tot de blootgestelde functionaliteiten van een bepaalde service. Voor beide architecturen verloopt de communicatie extern, via bijvoorbeeld REST API's. Wat anders is dan de communicatie tussen componenten in een monoliete applicatie waar de communicatie intern zal verlopen \autocite{Richardson2019}.
@@ -140,19 +69,10 @@ Fase vijf vindt plaats na de implementatie. In deze fase wordt gereflecteerd op 
 
 De zesde en laatste fase bestaat uit het opstellen van een abstract stappenplan aan de hand van de verworven kennis doorheen het onderzoek. Hiervoor wordt de praktisch ervaring gecombineerd met de vooraf bestudeerde literatuur. Voor deze fase is de geschatte duurtijd: \'e\'en week.
 
-
 \section{Verwachte conclusies}
 
-% TODO: (fase 6) beschrijf wat je verwacht uit je onderzoek en waarom (bv. volgens je literatuuronderzoek is softwarepakket A het meest gebruikte en denk je dat het voor deze casus ook het meest geschikt zal zijn). Natuurlijk kan je niet in de toekomst kijken en mag je geen alternatieve mogelijkheden uitsluiten. In de praktijk gebeurt het ook vaak dat een onderzoek tot verrassende resultaten leidt, dat maakt het proces nog interessanter!
 Er wordt verwacht dat het mogelijk moet zijn om een abstract stappenplan op te stellen. Indien blijkt dat de verworven kennis doorheen het onderzoek ondergeschikt blijkt voor het opstellen van een volledig stappenplan, dan wordt verwacht dat deze tenminste dienst kan doen als een katalysator voor verder onderzoek. 
 Ook wordt er verwacht dat de praktische implementatie in de meeste bedrijfscontexten uitvoerbaar is en dat het Proof-of-Concept gedeelte van het onderzoek dus tot een positief einde gebracht zal worden. Indien blijkt dat voor de gebruikte technologie binnen het bedrijf geen direct equivalent bestaat binnen de wereld van mono-repositories kan de ingeschatte tijd mogelijks te optimistisch blijken.
-
-%------------------------------------------------------------------------------
-% Referentielijst
-%------------------------------------------------------------------------------
-% TODO: (fase 4) de gerefereerde werken moeten in BibTeX-bestand
-% bibliografie.bib voorkomen. Gebruik JabRef om je bibliografie bij te
-% houden.
 
 \phantomsection
 \footnotetext{https://github.com/liamgoethals/paper-research-methods}
