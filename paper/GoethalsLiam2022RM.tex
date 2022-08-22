@@ -92,15 +92,36 @@ Bij de sleutelwoorden geef je het onderzoeksdomein (= specialisatierichting in d
 \lipsum[1-3]
 
 \section{Overzicht literatuur}
+% Wat zijn microservices?
+Het doel van microservices is het opsplitsen van een complexe applicatie in een aantal sub-applicaties met elk een specifieke verantwoordelijkheid \autocite{Thoenes2015}. Anders dan bij een monoliete applicatie, is elke service een alleenstaande entiteit die op zichzelf kan bestaan. Deze aparte entiteiten kunnen elk een eigen team van developers hebben waardoor een gelijktijdige samenwerking van meerdere teams aan hetzelfde hoofddoel mogelijk is. Elk team is dan verantwoordelijk voor de correcte werking, testing en deployment van hun service.
+Hoewel microservices niet enkel beperkt zijn tot web toepassingen, is de architectuur grotendeels terug te vinden in de wereld van webapplicaties \autocite{Richardson2019}.
 
-% TODO: (fase 4) schrijf de literatuurstudie uit en gebruik waar gepast referenties naar de vakliteratuur.
+% implementatie vorm: polyrepos
+De concrete implementatie van microservices is sterk afhankelijk van de bedrijfscontext. In de praktijk worden de verschillende services vaak opgesplitst in afzonderlijke repositories (polyrepos) \autocite{Brousse2019}. Elke repository bevat vervolgens normaliter applicatiespecifieke configuraties zoals: testen, een eigen mappenstructuur, CI/CD pipelines, toegangsrechten en afhankelijk van de benodigdheden en gebruikte systemen nog veel meer andere zaken. Deze implementatie vorm heeft als gevolgd dat er duplicate code en inconsistenties kunnen voorkomen doorheen de verschillende applicaties. Wanneer twee of meerdere applicaties een onderlinge afhankelijk hebben, zullen aanpassingen in de \'e\'ene applicatie mogelijks onverwachte effecten hebben in de andere(n). Dit laatste fenomeen maakt versiebeheer een belangrijk concept binnen opgesplitste services \autocite{Richardson2019}.
 
-% Refereren naar de literatuur kan met:
-% \autocite{BIBTEXKEY} -> (Auteur, jaartal)
-% \textcite{BIBTEXKEY} -> Auteur (jaartal)
-Voorbeeld van een referentie waar de auteursnaam geen onderdeel van de zin is~\autocite{Moore2002}.
+% implementatie vorm: monorepos
+Een aantal grote bedrijven waaronder Google \autocite{Potvin&Levenberg2016}, Microsoft \autocite{Tirion2021} en Facebook \autocite{Goode2014} besloten echter voor een andere implementatie vorm dan polyrepos, namelijk: de mono-repository (monorepo) architectuur.
+In een monorepo worden services alsnog opgesplitst, maar in plaats van te onderverdelen in verschillende repositories worden ze onderverdeeld in submappen binnen eenzelfde repository.
+Alle afzonderlijke services kunnen nog steeds direct aangesproken worden en kunnen dus beschouwd worden als alleenstaande applicaties.
+Dit laatste onderscheidt monorepos van monoliete applicaties \autocite{Brito2018}.
 
-\lipsum[4-9]
+% polyrepos vs monorepos
+Voor de gepaste implementatie keuze bestaan er voor beide vormen onderbouwde argumenten. Zolang de microservice methodologi"en gerespecteerd worden kunnen echter met beide een correct resultaat behaald worden. Elke implementatie vorm heeft zijn eigen voor- en nadelen op vlak van ontwikkelingsproces maar de keuze blijft afhangen van preferentie en context. Volgens een artikel van (ex-)medewerkers \textcite{Potvin&Levenberg2016} heeft Google zijn keuze grotendeels gebaseerd op de versimpelde werking van onderlinge service afhankelijkheid. In het verleden is er echter al een aantal keer intern onderzocht of het gunstig kon zijn om af te stappen van monorepos.  
+
+Zowel bij polyrepos als bij monorepos draagt elke service zijn eigen verantwoordelijkheid. Een publiek aansprekingspunt geeft de andere services toegang tot de blootgestelde functionaliteiten van een bepaalde service. Voor beide architecturen verloopt de communicatie extern, via bijvoorbeeld REST API's. Wat anders is dan de communicatie tussen componenten in een monoliete applicatie waar de communicatie intern zal verlopen \autocite{Richardson2019}.
+
+Binnen microservices bestaan er verschillende deployment strategie"en. Opnieuw is de keuze afhankelijk van bedrijfscontext. Ongeacht de gekozen strategie is het binnen de microservice filosofie belangrijk dat code snel en getest op de productieomgeving kan worden gezet \autocite{Richardson2019}.
+Bij polyrepos zal een wijziging op service niveau betekenen dat de repository zelf opnieuw gedeployed moet worden. Wanneer dezelfde strategie echter toegepast zou worden bij monorepos kan dit voor ongewenste problemen zorgen. Indien dit voor de gehele repository zou gebeuren bijvoorbeeld dan zal dit tot gevolg hebben dat alle services opnieuw gedeployed worden. Als in dit geval het totale project een zeer grote omvang heeft, zoals dit bij Google het geval is \autocite{Potvin&Levenberg2016}, zullen er veel overbodige deployment processen van start gaan. Om dit te voorkomen zullen monorepo-specifieke tools de interne services afzonderlijk deployen \autocite{Matei2020}. 
+
+Zoals eerder vermeld is ook het snel kunnen testen van de code een belangrijk principe binnen de wereld van microservices. Analoog aan het overbodig deployen van ongewijzigde code, zullen ook de testen dynamisch gestart moeten kunnen worden om een gelijke werking aan polyrepos te kunnen garanderen. 
+
+Voor polyrepos volstaat het vaak om gebruik te maken van een klassiek versiebeheersysteem. Ook voor monorepos zouden deze systemen in theorie bruikbaar moeten zijn.  
+Uit het eerder vermelde artikel van (ex-)medewerkers \textcite{Potvin&Levenberg2016} blijkt echter dat Google een eigen versiebeheersysteem gebruikt, genaamd Piper, voor het bijhouden van de individuele bestandswijzigingen in hun monorepo. Google koos, volgens hen, voor het ontwikkelen van een eigen tool omdat de bestaande systemen tekortkwamen voor grote monorepos.  Ook voor Facebook bleek dit een probleem te vormen wanneer zij gebruiken wouden maken van het populaire versiebeheersysteem Git\footnote{https://git-scm.com/}. In plaats van een eigen tool te ontwikkelen besloot Facebook om een bestaand systeem genaamd Mercurial\footnote{https://www.mercurial-scm.org/} te verbeteren voor hun toepassing \autocite{Goode2014}.
+Het valt op te merken dat de repositories van Google en Facebook beide een uitzonderlijk grote omvang hebben.
+
+Op het internet zijn vele monorepo-specifieke beheer- en deploy tools te vinden. Zo is Pants\footnote{https://v1.pantsbuild.org/index.html} bijvoorbeeld een open-source, door Twitter gecre"eerde, monorepo tool dat ontwikkelaars toelaat om plugins te implementeren voor om het even welke taal \autocite{Olson2016}. Hoewel er tools bestaan die taal-agnostisch te werk kunnen gaan, zoals Pants, bestaan er ook een groot deel taal-specifieke tools. Lerna\footnote{https://github.com/lerna/lerna} is een voorbeeld van een populaire tool die enkel ontwikkeld is voor Javascript en Typescript. De keuze van de tool, als deze nodig blijkt binnen de context, zal afhankelijk zijn van de specifieke voorkeuren van een bedrijf of organisatie.
+
+Ondanks dat de meeste tools een starter gids voorzien op hun website, is deze steeds gericht op het cre"eeren van een nieuw project. De monorepo tool Nx\footnote{https://nx.dev/migration/manual} heeft als uitzondering wel een kort platform specifiek stappenplan ter beschikking dat terug te vinden is in hun documentatie. Daarnaast bestaan er een aantal specifieke blogposts die zich vooral focussen op het cre"eren van migratie scripten. Migreren van een bestaande architectuur naar een monorepo is een complex proces waarvoor een abstract stappenplan ontbreekt. Dit laat de overschakeling echter onmogelijker uitstralen dan ze effectief zou kunnen zijn.
 
 \section{Methodologie}
 
