@@ -124,10 +124,21 @@ Op het internet zijn vele monorepo-specifieke beheer- en deploy tools te vinden.
 Ondanks dat de meeste tools een starter gids voorzien op hun website, is deze steeds gericht op het cre"eeren van een nieuw project. De monorepo tool Nx\footnote{https://nx.dev/migration/manual} heeft als uitzondering wel een kort platform specifiek stappenplan ter beschikking dat terug te vinden is in hun documentatie. Daarnaast bestaan er een aantal specifieke blogposts die zich vooral focussen op het cre"eren van migratie scripten. Migreren van een bestaande architectuur naar een monorepo is een complex proces waarvoor een abstract stappenplan ontbreekt. Dit laat de overschakeling echter onmogelijker uitstralen dan ze effectief zou kunnen zijn.
 
 \section{Methodologie}
+Het onderzoek bestaat uit zes fases. 
+De totale duur van het onderzoek bedraagt 13 weken.
 
-% TODO: (fase 5) beschrijf in detail in welke fasen je onderzoek uiteenvalt, hoe lang elke fase duurt en wat het concrete resultaat van elke fase is. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor experimenten, vragenlijsten, simulaties? Je beschrijft ook al welke tools je denkt hiervoor te gebruiken of te ontwikkelen.
+Fase \'e\'en is het uitvoeren van een literatuurstudie. Er wordt opzoekingswerk verricht naar de bestaande mono-repository technologi"en en literatuur omtrent mono-repository migraties. Voor deze fase is de geschatte duurtijd: twee weken. 
 
-\lipsum[10-12]
+Fase twee is de aanvang van de Proof-of-Concept in samenwerking met het bedrijf. In deze fase wordt de interne structuur van het bedrijf bestudeerd en geschetst om een beeld te kunnen scheppen van de huidige situatie en de nodige vereisten. Er wordt extra aandacht besteed aan het bestuderen van onderlinge afhankelijkheid en het huidige gebruik van databanksystemen. Deze schets brengt enkel de services in kaart die relevant zijn voor het onderzoek. Voor deze fase is de geschatte duurtijd: twee weken.
+
+Fase drie bestaat uit de theoretische implementatie van de verworven kennis uit de literatuurstudie en het plannen van de implementatie. Hier wordt in samenspraak met het bedrijf gekeken naar welke implementatie vorm de voorkeuren uitgaan. De reeds verkozen taal, architectuur, databanksystemen, toekomstplannen, systeemvereisten en schaalbaarheids eisen zullen impact hebben op de te maken beslissing. Voor deze fase is de geschatte duurtijd: drie weken.
+
+Fase vier is de effectieve implementatie van het vooropgestelde plan. Als Proof-of-Concept volstaat het om een aantal repositories te migreren naar een mono-repository. Een volledige migratie zou teveel werk en teveel toegang tot interne bedrijfsgegevens vereisen. Deze fase vergt een zekere voorbereidingstijd waarbij het opzetten van backup systemen essentieel is. Stap voor stap zullen de gekozen repositories ge"implementeerd worden in de mono-repository. De migratie van deze repository gebeurt 'e'en voor 'e'en waarbij pas overgeschakeld kan worden op de volgende repository wanneer de huidige volledig ge"implementeerd is en functioneert zoals voordien. Voor deze fase is de geschatte duurtijd: vier weken.
+
+Fase vijf vindt plaats na de implementatie. In deze fase wordt gereflecteerd op het bekomen resultaat en worden de bevindingen gebundeld. Er wordt een oplijsting gemaakt van onverwachte problemen en er wordt bekeken of deze al dan niet te voorkomen waren. Voor deze fase is de geschatte duurtijd: \'e\'en week.
+
+De zesde en laatste fase bestaat uit het opstellen van een abstract stappenplan aan de hand van de verworven kennis doorheen het onderzoek. Hiervoor wordt de praktisch ervaring gecombineerd met de vooraf bestudeerde literatuur. Voor deze fase is de geschatte duurtijd: \'e\'en week.
+
 
 \section{Verwachte conclusies}
 
